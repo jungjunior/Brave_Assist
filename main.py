@@ -26,13 +26,30 @@ def speak(text):
     engine.runAndWait()
 
 
-# Reconhecimento de fala
+def evaluate(text):
+    # Reconhecer entidade do texto
+        entity = classify(text)
 
+        if entity == 'time|getTime':
+            speak(core.SystemInfo.get_time())
+
+        elif entity == 'time|getDate':
+            speak(core.SystemInfo.get_date())
+
+        #abrir programa
+        elif entity == 'open|notepad':
+            speak('Vou abrir o bloco de notas para você')
+            os.system('notepad.exe')
+
+            
+        print('Text: {} Entity: {}'.format(text, entity))
+    
 
 
 # loop do reconhecimento de fala
 q = queue.Queue()
 
+# Reconhecimento de fala
 def int_or_str(text):
     """Helper function for argument parsing."""
     try:
@@ -108,17 +125,8 @@ try:
 
                     if(result is not None):
                         text = result['text']
+                        evaluate(text)
                         
-                        # Reconhecer entidade do texto
-                        entity = classify(text)
-
-                        if entity == 'time\getTime':
-                            speak(core.SystemInfo.get_time())
-
-                        elif entity == 'time\getDate':
-                            speak(core.SystemInfo.get_date())
-                            
-                        print('Text: {} Entity: {}'.format(text, entity))
 
 except KeyboardInterrupt:
     print('\nDone')
