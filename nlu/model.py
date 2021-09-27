@@ -17,45 +17,30 @@ for command in data['commands']:
 
 # processar texto: palavras, caracteres, bytes, sub-plavras
 
-chars = set()
 
-for input in inputs + outputs:
-    for ch in input:
-        if ch not in chars:
-            chars.add(ch)
+max_seq = max([len(bytes(x.encode('utf-8'))) for x in inputs])
 
-# mapear char-idx
-
-chr2idx = {}
-idx2char = {}
-
-for i, ch in enumerate(chars):
-    chr2idx[ch] = i
-    idx2char[i] = ch
-
-       
-
-max_seq = max([len(x) for x in inputs])
-print('numero de chars:', len(chars)) 
 print('Maior seq:', max_seq) 
 
 # criar o dataset one-hot (numero de exemplos, tamanho da sequencia, num caracteres)
 # criar o dataset disperso (numero de exemplos, tamanho da sequencia)
-#input_data = np.zeros((len(inputs), max_seq, len(chars)), dtype='int32')
 
+#input data one-hot
 
-#criar labels para o classificador
-
-
+input_data = np.zeros((len(inputs), max_seq, 256), dtype='float32')
 for i, input in enumerate(inputs):
-    for k, ch in enumerate(input):
-        input_data[i, k, chr2idx[ch]] = 1.0
+    for k, ch in enumerate(bytes(inp.encode('utf-8'))):
+        input_data[i, k, int(ch)] = 1.0
 
+
+#input data sparse
+'''
 input_data = np.zeros((len(inputs), max_seq), dtype='int32')
 
 for i, input in enumerate(inputs):
     for k, ch in enumerate(input):
-        input_data[i, k, chr2idx[ch]] = 1.0
+        input_data[i, k] = chr2idx[ch]
+'''
 
 #output data
 labels = set(outputs)
@@ -74,21 +59,19 @@ for output in outputs:
 
 output_data = to_categorical(output_data, len(output_data))
 
-for i, input in enumerate(inputs):
-    for k, ch in enumerate(input):
-        input_data[i, k, chr2idx[ch]] = 1.0
-
 print(output_data[0])        
 
 
 model = Sequential()
-model.add(LSTM(128, return_sequences=True))
+model.add(LSTM(128))
 model.add(Dense(len(output_data), activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['acc'])
 model.summary()
 
 model.fit(input_data, output_data, epochs=16)
+
+
 '''
 print(inputs)
 print(outputs)
