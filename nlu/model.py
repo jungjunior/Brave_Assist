@@ -2,14 +2,18 @@ import yaml
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-
+from tensorflow.layers import LSTM, Dense
+from tensorflow.keras.utils import to_categorical
 data = yaml.safe_load(open('nlu\\train.yml', 'r', encoding='utf-8').read())
 
 inputs, outputs = [], []
+output_data = to_categorical(outputs, len(outputs))
 
 for command in data['commands']:
     inputs.append(command['input'].lower())
     outputs.append('{}\{}'.format(command['entity'], command['action']))
+
+
 
 # processar texto: palavras, caracteres, bytes, sub-plavras
 
@@ -43,7 +47,7 @@ for i, input in enumerate(inputs):
     for k, ch in enumerate(input):
         input_data[i, k, chr2idx[ch]] = 1.0
 
-print(input_data[4])        
+print(output_data[0])        
 
 
 '''
