@@ -1,18 +1,5 @@
 # arquivo inicial
 
-'''
-import speech_recognition as sr
-
-
-# cria um reconhecedor
-r = sr.Recognizer()
-
-# Abrir o microfone para captura
-with sr.Microphone() as source:
-    while True:
-        audio =  r.listen(source) #define microfone como fonte de audio
-        print(r.recognize_google(audio, language='pt'))
-'''
 
 import argparse
 import os
@@ -20,7 +7,29 @@ import queue
 import sounddevice as sd
 import vosk
 import sys
+import pyttsx3
+import json
+import core
 
+
+# sinteze de fala
+engine = pyttsx3.init()
+
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
+
+
+
+def speak(text):        
+    engine.say(text)
+    engine.runAndWait()
+
+
+# Reconhecimento de fala
+
+
+
+# loop do reconhecimento de fala
 q = queue.Queue()
 
 def int_or_str(text):
@@ -89,12 +98,21 @@ try:
             rec = vosk.KaldiRecognizer(model, args.samplerate)
             while True:
                 data = q.get()
-                if rec.AcceptWaveform(data):
-                    print(rec.Result())
-                else:
-                    print(rec.PartialResult())
-                if dump_fn is not None:
-                    dump_fn.write(data)
+                if(data == 0):
+                    break
+                
+                if(rec.AcceptWaveform(data)):
+                    result = rec.Result()
+                    result = json.loads(result)
+
+                    if(result is not None):
+                        text = result['text']
+                        
+                        print(text)
+                        '''speak(text)'''
+
+                        if text == 'que horas são' or text == 'me diga as horas':
+                            speak(core.SystemInfo.get_time())
 
 except KeyboardInterrupt:
     print('\nDone')
