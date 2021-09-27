@@ -28,7 +28,7 @@ print('Maior seq:', max_seq)
 #input data one-hot
 
 input_data = np.zeros((len(inputs), max_seq, 256), dtype='float32')
-for i, input in enumerate(inputs):
+for i, inp in enumerate(inputs):
     for k, ch in enumerate(bytes(inp.encode('utf-8'))):
         input_data[i, k, int(ch)] = 1.0
 
@@ -67,9 +67,26 @@ model.add(LSTM(128))
 model.add(Dense(len(output_data), activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['acc'])
-model.summary()
 
-model.fit(input_data, output_data, epochs=16)
+model.fit(input_data, output_data, epochs=128)
+
+#classificar te4xto em uma entidade
+def classify(text):
+    #criar array de entrada
+    x = np.zeros((1, 48, 256), dtype='float32')
+
+    #preencher o array com dados de texto
+    for k, ch in enumerate(bytes(text.encode('utf-8'))):
+        x[0, k, int(ch)] = 1.0
+
+    out = model.predict(x)
+    idx = out.argmax()
+    print(idx2label[idx])
+
+while True:
+    text = input('Digite algo: ')
+    classify(text)
+
 
 
 '''
