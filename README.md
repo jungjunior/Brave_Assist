@@ -1,5 +1,6 @@
 # Brave_Assist
  Assistente virtual Begins
 
- Foco:
+ Projeto:
+    Reconhecimento de voz (Google(online), vosk(Offline))
     Inteligencia.
