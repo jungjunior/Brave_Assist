@@ -1,5 +1,7 @@
 import yaml
 import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
 
 data = yaml.safe_load(open('nlu\\train.yml', 'r', encoding='utf-8').read())
 
@@ -41,7 +43,7 @@ for i, input in enumerate(inputs):
     for k, ch in enumerate(input):
         input_data[i, k, chr2idx[ch]] = 1.0
 
-print(input_data[0])        
+print(input_data[4])        
 
 
 '''
