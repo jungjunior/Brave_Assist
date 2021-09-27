@@ -1,4 +1,4 @@
 time\getDate
-open\None
+open\google
 weather\getWeather
 time\getTime
