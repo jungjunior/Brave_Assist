@@ -1,5 +1,18 @@
 commands:
-  # Hora
+#sobre o assistente
+  - command:
+    input:  Qual o seu nome?.
+    entity: nome
+    action: nome
+  - command:
+    input:  Quem é você?.
+    entity: nome
+    action: nome
+  - command:
+    input:  Me fale seu nome.
+    entity: nome
+    action: nome    
+# Hora
   - command:
     input:  Me diga as horas.
     entity: time
@@ -12,7 +25,7 @@ commands:
     input:  Eu quero saber as horas.
     entity: time
     action: getTime  
-  # data
+# data
   - command:
     input:  Qual é a data de hoje?
     entity: time
@@ -21,7 +34,7 @@ commands:
     input:  Data de hoje?
     entity: time
     action: getDate  
-  # Tempo
+# Tempo
   - command:
     input: Previsão do tempo.
     entity: weather
@@ -30,16 +43,22 @@ commands:
     input: Como está o clima?
     entity: weather
     action: getWeather  
-  #Open
+#Open
+  #bloco de notas 
   - command:
     input: Abrir bloco de notas
     entity: open
     action: notepad
   - command:
-    input: Abra o bloco de notas
-    entity: open
-    action: notepad
-  - command:
     input: Preciso fazer uma anotação
     entity: open
-    action: notepad    
+    action: notepad
+  #navegador  
+  - command:
+    input: Preciso fazer uma pesquisa na internet
+    entity: open
+    action: navegador
+  - command:
+    input: Abrir navegador
+    entity: open
+    action: navegador     

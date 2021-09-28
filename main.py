@@ -41,6 +41,10 @@ def evaluate(text):
             speak('Vou abrir o bloco de notas para você')
             os.system('notepad.exe')
 
+        elif entity == 'open|navegador':
+            speak('vou abrir o navegador pra você')
+            os.system('msedge.exe')    
+
             
         print('Text: {} Entity: {}'.format(text, entity))
     
