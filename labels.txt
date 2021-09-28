@@ -1,6 +1,6 @@
-time|getDate
-weather|getWeather
-open|navegador
 open|notepad
 nome|nome
+time|getDate
 time|getTime
+weather|getWeather
+close|notepad

@@ -2,7 +2,7 @@
 
 
 import argparse
-import os
+import psutil, os
 import queue
 import sounddevice as sd
 import vosk
@@ -25,6 +25,8 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
+def  close_program(name):
+    os.system("TASKKILL /F /IM {}".format(name))
 
 def evaluate(text):
     # Reconhecer entidade do texto
@@ -39,13 +41,12 @@ def evaluate(text):
         #abrir programa
         elif entity == 'open|notepad':
             speak('Vou abrir o bloco de notas para você')
-            os.system('notepad.exe')
-
-        elif entity == 'open|navegador':
-            speak('vou abrir o navegador pra você')
-            os.system('msedge.exe')    
-
-            
+            os.system('notepad.exe') 
+        
+        #fechar programa
+        elif entity == 'close|notepad':
+            speak('Ok, vou encerrar suas anotações')
+            close_program('notepad.exe')
         print('Text: {} Entity: {}'.format(text, entity))
     
 

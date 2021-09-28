@@ -53,12 +53,9 @@ commands:
     input: Preciso fazer uma anotação
     entity: open
     action: notepad
-  #navegador  
+#close
+  #bloco de notas
   - command:
-    input: Preciso fazer uma pesquisa na internet
-    entity: open
-    action: navegador
-  - command:
-    input: Abrir navegador
-    entity: open
-    action: navegador     
+    input: Fechar bloco de notas
+    entity: close
+    action: notepad   
